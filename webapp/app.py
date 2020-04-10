@@ -65,5 +65,15 @@ def createUser():
         return json.dumps({'error': 'No Response From Database'})
 
 
+@app.route("/GetMovies")
+def getMovies():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM movies")
+    data = cursor.fetchall()
+    if data:
+        return render_template('movies.html', x=data)
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
