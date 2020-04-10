@@ -1,12 +1,12 @@
-from flask import Flask, render_template, session, request
+from flask import Flask, render_template, session, request, redirect
 from flaskext.mysql import MySQL
 import json
-#from werkzeug import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__,
             static_url_path='',
             static_folder='static')
-
+app.secret_key = b'\x8b3\xbal3/-1\xb6s\x9a\xef\x03\xf1\xf0\xd4'
 mysql = MySQL()
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'DBMMoviesAdmin'
@@ -24,22 +24,45 @@ def index():
         return render_template('index.html', username=session['username'])
 
 
+@app.route("/logout")
+def logout():
+    session.pop('username')
+    return redirect("/")
+
+
 @app.route("/login", methods=['POST'])
 def login():
     _username = request.form['Username']
     _password = request.form['Password']
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.callproc('sp_login', (_username, _password))
+    cursor.callproc('sp_login', (_username,))
     data = cursor.fetchall()
-    return json.dumps({'error': str(data)})
+    if data:
+        print(data)
+        if check_password_hash(data[0][0], _password):
+            session['username'] = _username
+    return redirect("/")
 
 
 @app.route("/createUser", methods=['POST'])
 def createUser():
+    _username = request.form['Username']
+    _password = request.form['Password']
     conn = mysql.connect()
+    cursor = conn.cursor()
     _hashed_password = generate_password_hash(_password)
-    return "You said: " + request.form['text']
+    cursor.callproc('sp_TestReturn', (_username, _hashed_password))
+    data = cursor.fetchall()
+    print(data)
+    if data:
+        if data[0][0] == 1:
+            conn.commit()
+            return json.dumps({'success': 'User Created'})
+        else:
+            return json.dumps({'error': 'User Already Exists'})
+    else:
+        return json.dumps({'error': 'No Response From Database'})
 
 
 if __name__ == '__main__':
