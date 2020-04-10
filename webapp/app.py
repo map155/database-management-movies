@@ -74,6 +74,17 @@ def getMovies():
     if data:
         return render_template('movies.html', x=data)
 
+app.route("/getProfile")
+def getProfile():
+    _username = session['username']
+    selectStatement = "SELECT username FROM users WHERE username = %(user)"
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute(selecStatement, {'user' : _username})
+    data = cursor.fetchall()
+    if data:
+        return render_template('profile.html', x = data)
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
