@@ -27,7 +27,34 @@ def index():
 @app.route("/logout")
 def logout():
     session.pop('username')
+    session.pop('user_id')
     return redirect("/")
+
+
+@app.route("/DeleteUser")
+def deleteUser():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.callproc('sp_deleteUser', (session['username'],))
+    conn.commit()
+    session.pop('username')
+    session.pop('user_id')
+    return redirect("/")
+
+
+@app.route("/FavMovies", methods=['POST'])
+def favMovies():
+    movieID = request.form['movieID']
+    print(movieID)
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.callproc('sp_addFavMovie', (movieID, session['user_id']))
+    data = cursor.fetchall()
+    if data:
+        print(data)
+        conn.commit()
+        return json.dumps({'success': 'Favorited Movie'})
+    return json.dumps({'Error': 'Unknonwn'})
 
 
 @app.route("/login", methods=['POST'])
@@ -36,12 +63,13 @@ def login():
     _password = request.form['Password']
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.callproc('sp_login', (_username,))
+    cursor.callproc('sp_Login', (_username,))
     data = cursor.fetchall()
     if data:
         print(data)
         if check_password_hash(data[0][0], _password):
             session['username'] = _username
+            session['user_id'] = data[0][1]
     return redirect("/")
 
 
@@ -52,7 +80,7 @@ def createUser():
     conn = mysql.connect()
     cursor = conn.cursor()
     _hashed_password = generate_password_hash(_password)
-    cursor.callproc('sp_TestReturn', (_username, _hashed_password))
+    cursor.callproc('sp_CreateUser', (_username, _hashed_password))
     data = cursor.fetchall()
     print(data)
     if data:
@@ -74,6 +102,7 @@ def getMovies():
     if data:
         return render_template('movies.html', x=data)
 
+
 @app.route("/getProfile")
 def getProfile():
     # _username = session['username']
@@ -83,9 +112,8 @@ def getProfile():
     # cursor.execute(selecStatement, {'user' : _username})
     # data = cursor.fetchall()
     # if data:
-        # return render_template('profile.html', x = data)
-    return render_template('profile.html')
-
+    # return render_template('profile.html', x = data)
+    return render_template('profile.html', username=session['username'])
 
 
 if __name__ == '__main__':

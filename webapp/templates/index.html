@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Simple Sidebar - Start Bootstrap Template</title>
+  <title>Movie Explorer</title>
 
   <!-- Bootstrap core CSS -->
   <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -36,7 +36,7 @@
 
     <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
-      <div class="sidebar-heading">Start Bootstrap </div>
+      <div class="sidebar-heading">Movie Manager</div>
       <div class="list-group list-group-flush">
         <a id="ProfileTab" class="list-group-item list-group-item-action bg-light">Profile</a>
         <a id="MoviesTab" class="list-group-item list-group-item-action bg-light">Movies</a>
@@ -64,7 +64,6 @@
       </nav>
 
       <div class="container-fluid" id='MainBox'>
-            CONTENT GOES HERE
       </div>
     </div>
     <!-- /#page-content-wrapper -->
@@ -106,6 +105,16 @@
              }
            });
        });
+     $( document ).ready(function() {
+         $.ajax({
+                type: "GET",
+                url: '/getProfile',
+                success: function(data)
+                {
+                    $("#MainBox").html(data);
+                }
+              });
+    });
   </script>
 
 </body>
