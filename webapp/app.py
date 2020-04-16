@@ -102,6 +102,29 @@ def getMovies():
     if data:
         return render_template('movies.html', x=data)
 
+@app.route("/GetActors")
+def getActors():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM actors")
+    data = cursor.fetchall()
+    if data:
+        return render_template('actors.html', x=data)
+
+@app.route("/FavActors", methods=['POST'])
+def FavActors():
+    actorID = request.form['actorID']
+    print(actorID)
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.callproc('sp_addFavActor', (movieID, session['user_id']))
+    data = cursor.fetchall()
+    if data:
+        print(data)
+        conn.commit()
+        return json.dumps({'success': 'Favorited Actor'})
+    return json.dumps({'Error': 'Unknonwn'})
+
 
 @app.route("/getProfile")
 def getProfile():

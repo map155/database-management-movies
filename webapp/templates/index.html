@@ -40,6 +40,7 @@
       <div class="list-group list-group-flush">
         <a id="ProfileTab" class="list-group-item list-group-item-action bg-light">Profile</a>
         <a id="MoviesTab" class="list-group-item list-group-item-action bg-light">Movies</a>
+        <a id="ActorsTab" class="list-group-item list-group-item-action bg-light">Actors</a>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -93,6 +94,18 @@
              }
            });
        });
+
+       $("ActorsTab").click(function(e) {
+         e.preventDefault();
+         $.ajax({
+                type: "GET",
+                url: '/GetActors',
+                success: function(data)
+                {
+                    $("#MainBox").html(data);
+                }
+              });
+          });
 
     $("#ProfileTab").click(function(e) {
       e.preventDefault();
