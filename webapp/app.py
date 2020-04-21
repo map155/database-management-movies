@@ -117,7 +117,7 @@ def FavActors():
     print(actorID)
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.callproc('sp_addFavActor', (movieID, session['user_id']))
+    cursor.callproc('sp_addFavActor', (actorID, session['user_id']))
     data = cursor.fetchall()
     if data:
         print(data)
