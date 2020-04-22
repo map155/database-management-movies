@@ -1,5 +1,20 @@
-<div class="page-header">
-   <h2>{{username}}</h2>
- </div>
+<head>
+    <div class="page-header">
+        <h2>Welcome {{username}}</h2>
+    </div>
+ </head>
 
- <a class="btn btn-primary" id="deleteUser" href="/DeleteUser">Delete User</a>
+<body>
+    <div class="movie-header" style=margin-bottom:50px>
+        <h4>Your favorite movies:</h4>
+    </div>
+    <div class="actor-header" style=margin-bottom:50px>
+        <h4>Your favorite actors:</h4>
+    </div>
+    <div class="actor-header" style=margin-bottom:50px>
+        <h4>Get a movie recommendation</h4>
+        <a class="btn btn-primary" id="getRec" href="/getRec">Your recommendation:</a>
+        <p> Some movie goes here</p>
+    </div>
+    <a class="btn btn-primary" id="deleteUser" href="/DeleteUser">Delete User</a>
+</body>
