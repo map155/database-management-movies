@@ -72,6 +72,24 @@ def login():
             session['user_id'] = data[0][1]
     return redirect("/")
 
+@app.route("/boxOffice", methods=['GET', 'POST'])
+def boxOffice():
+    directorf = request.form['Director1']
+    directorl = request.form['Director2']
+    actorf = request.form['Actor1']
+    actorl = request.form['Actor2']
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.callproc('sp_boxOffice', (directorf, directorl, actorf, actorl))
+    data = cursor.fetchall()
+    if data:
+        session['prediction'] = data
+        return json.dumps({'Prediction': data})
+    else:
+        return json.dumps({'Prediction': 'unsuccessful'})
+
+
+
 
 @app.route("/createUser", methods=['POST'])
 def createUser():
