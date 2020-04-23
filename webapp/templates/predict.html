@@ -1,0 +1,38 @@
+    <div class="login-form">
+        <form action="/predictBox" method="post" id="predictForm">
+            <h2 class="text-center">Box-office Predictor</h2>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Director-firstname" name="Director1" required="required">
+            </div>
+                        <div class="form-group">
+                <input type="text" class="form-control" placeholder="Director-lastname" name="Director2" required="required">
+            </div>
+                        <div class="form-group">
+                <input type="text" class="form-control" placeholder="Actor-firstname" name="Actor1" required="required">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Actor-lastname" name="Actor2" required="required">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Predict</button>
+            </div>
+        </form>
+        <h3>Prediction: {{prediction}}</h3>
+    </div>
+
+<script>
+$(".predictBox").click(function(e) {
+  e.preventDefault();
+  $.ajax({
+         type: "POST",
+         url: '/predictBox',
+         data: predictForm,
+         success: function(data)
+         {
+            alert(data);
+         }
+       });
+   });
+
+
+</script>
