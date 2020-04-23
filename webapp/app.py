@@ -84,7 +84,7 @@ def boxOffice():
     # data = cursor.fetchall()
     # if data:
     #     session['prediction'] = data
-    return render_template('test.html')
+    return render_template('predict.html')
 
 @app.route("/predictBox", methods=['GET', 'POST'])
 def predictBox():
