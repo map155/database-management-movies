@@ -161,15 +161,27 @@ def FavActors():
 
 @app.route("/getProfile")
 def getProfile():
-    # _username = session['username']
-    # selectStatement = "SELECT username FROM users WHERE username = %(user)"
-    # conn = mysql.connect()
-    # cursor = conn.cursor()
-    # cursor.execute(selecStatement, {'user' : _username})
-    # data = cursor.fetchall()
-    # if data:
-    # return render_template('profile.html', x = data)
-    return render_template('profile.html', username=session['username'])
+    userID = session['user_id']
+
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.callproc('sp_getUserFavMovies', (userID,))
+    favMovie = cursor.fetchall()
+    ftitle = favMovie[0][0]
+    frelease = favMovie[0][1]
+    frating = favMovie[0][2]
+
+    cursor.callproc('sp_getUserFavActors', (userID,))
+    totalName = cursor.fetchall()
+    fName = totalName[0][0]
+    lName = totalName[0][1]
+    favActor = fName + ' ' + lName
+
+    cursor.callproc('sp_getUserRec', (userID,))
+    rMovie = cursor.fetchall()
+    rMovie = rMovie[0][0]
+
+    return render_template('profile.html', username=session['username'], title = ftitle, rYear = frelease, rating = frating, actor=favActor,recMovie = rMovie)
 
 
 if __name__ == '__main__':
