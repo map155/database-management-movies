@@ -46,4 +46,17 @@ $(".movieFav").click(function(e) {
        });
    });
 
+   $(".searchMovie").click(function(e) {
+        e.preventDefault();
+        $.ajax({
+               type: "Get",
+               url: '/SearchMovies',
+               data: {"query": $(this).getElementByName('movieSearch')},
+               success: function(data)
+               {
+                  alert(data);
+               }
+             });
+     });
+
 </script>

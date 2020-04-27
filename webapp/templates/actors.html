@@ -36,4 +36,17 @@ $(".actorFav").click(function(e) {
          }
        });
    });
+
+$(".searchActor").click(function(e) {
+     e.preventDefault();
+     $.ajax({
+            type: "Get",
+            url: '/SearchActors',
+            data: {"query": $(this).getElementByName('actorSearch')},
+            success: function(data)
+            {
+               alert(data);
+            }
+          });
+  });
 </script>

@@ -21,3 +21,19 @@
 
   </tbody>
 </table>
+
+<script>
+   $(".searchDir").click(function(e) {
+        e.preventDefault();
+        $.ajax({
+               type: "Get",
+               url: '/SearchDirectors',
+               data: {"query": $(this).getElementByName('dirSearch')},
+               success: function(data)
+               {
+                  alert(data);
+               }
+             });
+     });
+
+</script>
