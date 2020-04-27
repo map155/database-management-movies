@@ -144,6 +144,15 @@ def getActors():
     if data:
         return render_template('actors.html', x=data)
 
+@app.route("/GetDirectors")
+def getDirectors():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM directors")
+    data = cursor.fetchall()
+    if data:
+        return render_template('directors.html', x=data)
+
 @app.route("/FavActors", methods=['POST'])
 def FavActors():
     actorID = request.form['actorID']
