@@ -88,13 +88,15 @@ def boxOffice():
 
 @app.route("/predictBox", methods=['GET', 'POST'])
 def predictBox():
-    directorf = request.form['Director1']
-    directorl = request.form['Director2']
-    actorf = request.form['Actor1']
-    actorl = request.form['Actor2']
+    directorf = request.form['DirectorF']
+    directorl = request.form['DirectorL']
+    actor1f = request.form['Actor1F']
+    actor1l = request.form['Actor1L']
+    actor2f = request.form['Actor2F']
+    actor2l = request.form['Actor2L']
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.callproc('sp_boxOffice', (directorf, directorl, actorf, actorl))
+    cursor.callproc('sp_boxOffice', (directorf, directorl, actor1f, actor1l, actor2f, actor2l))
     data = cursor.fetchall()
     if data:
         session['prediction'] = data
