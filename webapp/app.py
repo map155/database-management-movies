@@ -131,7 +131,7 @@ def createUser():
 def getMovies():
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM movies limit 100")
+    cursor.execute("SELECT * FROM movies ORDER BY RAND() LIMIT 50")
     data = cursor.fetchall()
     if data:
         return render_template('movies.html', x=data)
@@ -140,7 +140,7 @@ def getMovies():
 def getActors():
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM actors limit 100")
+    cursor.execute("SELECT * FROM actors ORDER BY RAND() LIMIT 50")
     data = cursor.fetchall()
     if data:
         return render_template('actors.html', x=data)
@@ -149,7 +149,7 @@ def getActors():
 def getDirectors():
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM directors limit 100")
+    cursor.execute("SELECT * FROM directors ORDER BY RAND() LIMIT 50")
     data = cursor.fetchall()
     if data:
         return render_template('directors.html', x=data)
