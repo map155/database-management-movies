@@ -45,7 +45,7 @@ $(".searchActor").click(function(e) {
             data: {"query": document.getElementsByName('actorSearch').value},
             success: function(data)
             {
-               alert(data);
+               $("#MainBox").html(data);
             }
           });
   });
