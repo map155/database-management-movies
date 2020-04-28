@@ -54,7 +54,7 @@ $(".movieFav").click(function(e) {
                data: {"query": document.getElementsByName('movieSearch').value},
                success: function(data)
                {
-                  alert(data);
+                  $("#MainBox").html(data);
                }
              });
      });
