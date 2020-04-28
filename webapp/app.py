@@ -86,7 +86,7 @@ def boxOffice():
     #     session['prediction'] = data
     return render_template('predict.html')
 
-@app.route("/predictBox", methods=['GET', 'POST'])
+@app.route("/predictBox", methods=['GET','POST'])
 def predictBox():
     directorf = request.form['DirectorF']
     directorl = request.form['DirectorL']
@@ -100,8 +100,8 @@ def predictBox():
     data = cursor.fetchall()
     if data:
         session['prediction'] = data[0][0]
-        return json.dumps({'Prediction' : data})
-        # return render_template('predict.html', prediction = data[0][0])
+        # return json.dumps({'Prediction' : data})
+        return render_template('predict.html', prediction = data[0][0])
     else:
         return json.dumps({'Prediction' : 'unsuccessful'})
 
@@ -168,7 +168,7 @@ def FavActors():
         return json.dumps({'success': 'Favorited Actor'})
     return json.dumps({'Error': 'Unknonwn'})
 
-@app.route("/SearchActors", methods=['GET'])
+@app.route("/SearchActors", methods=['GET','POST'])
 def SearchActors():
     userQuery = request.form['query']
     conn = mysql.connect()
@@ -179,12 +179,12 @@ def SearchActors():
         return render_template('actors.html', x=data)
     return json.dumps({'Error': 'Unknonwn'})
 
-@app.route("/SearchMovies", methods=['GET'])
+@app.route("/SearchMovies", methods=['GET', 'POST'])
 def SearchMovies():
-    userQuery = request.form['movieSearch']
+    title = request.form['title']
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.callproc('sp_searchMovies', userQuery)
+    cursor.callproc('sp_searchMovies', (title,))
     data = cursor.fetchall()
     if data:
         return render_template('movies.html', x=data)

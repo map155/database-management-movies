@@ -1,5 +1,18 @@
-<INPUT TYPE = "Text" name = "movieSearch" id = 'movieSearch'>
-<button class="btn btn-primary movieSearch">Search</button>
+<!-- Bootstrap core CSS -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="/css/simple-sidebar.css" rel="stylesheet">
+
+    <div class="login-form">
+        <form action="/SearchMovies" method="post" id="searchForm">
+            <h2 class="text-center">Search</h2>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Title" name="title" required="required">
+            </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Search</button>
+            </div>
 
 <table class="table table-striped" style=margin-top:50px>
   <thead>
@@ -49,7 +62,7 @@ $(".movieFav").click(function(e) {
    $(".movieSearch").click(function(e) {
         e.preventDefault();
         $.ajax({
-               type: "GET",
+               type: "POST",
                url: '/SearchMovies',
                data: {"query": document.getElementsByName('movieSearch').value},
                success: function(data)
