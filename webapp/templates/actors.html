@@ -42,7 +42,7 @@ $(".searchActor").click(function(e) {
      $.ajax({
             type: "Get",
             url: '/SearchActors',
-            data: {"query": $(this).getElementByName('actorSearch')},
+            data: {"query": document.getElementsByName('actorSearch').value},
             success: function(data)
             {
                alert(data);

@@ -51,7 +51,7 @@ $(".movieFav").click(function(e) {
         $.ajax({
                type: "Get",
                url: '/SearchMovies',
-               data: {"query": $(this).getElementByName('movieSearch')},
+               data: {"query": document.getElementsByName('movieSearch').value},
                success: function(data)
                {
                   alert(data);

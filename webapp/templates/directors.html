@@ -28,7 +28,7 @@
         $.ajax({
                type: "Get",
                url: '/SearchDirectors',
-               data: {"query": $(this).getElementByName('dirSearch')},
+               data: {"query": document.getElementByName('dirSearch').value},
                success: function(data)
                {
                   alert(data);
