@@ -222,7 +222,8 @@ def getProfile():
 
     cursor.callproc('sp_getUserRec', (userID,))
     rMovie = cursor.fetchall()
-    rMovie = rMovie[0][0]
+    if rMovie:
+        rMovie = rMovie[0][0]
 
     return render_template('profile.html', username=session['username'], x=favMovie, actor=totalName,recMovie = rMovie)
 
