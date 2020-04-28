@@ -17,3 +17,17 @@
        {% endfor %}
 
   </tbody>
+  <script>
+  $(".actorFav").click(function(e) {
+    e.preventDefault();
+    $.ajax({
+           type: "POST",
+           url: '/FavActors',
+           data: {"actorID":$(this).parent().next('th').text()},
+           success: function(data)
+           {
+              alert(data);
+           }
+         });
+     });
+</script>

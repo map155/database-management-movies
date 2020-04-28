@@ -19,3 +19,17 @@
        {% endfor %}
 
   </tbody>
+  <script>
+  $(".movieFav").click(function(e) {
+    e.preventDefault();
+    $.ajax({
+           type: "POST",
+           url: '/FavMovies',
+           data: {"movieID":$(this).parent().next('th').text()},
+           success: function(data)
+           {
+              alert(data);
+           }
+         });
+     });
+     </script>
