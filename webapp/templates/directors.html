@@ -1,6 +1,21 @@
+<!-- Bootstrap core CSS -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
 
-<INPUT TYPE = "Text" Name = "dirSearch">
-<button class="btn btn-primary searchDir">Search</button>
+  <!-- Custom styles for this template -->
+  <link href="/css/simple-sidebar.css" rel="stylesheet">
+   
+    <div class="login-form">
+        <form action="/SearchDirectors" method="post" id="searchForm">
+            <h2 class="text-center">Search</h2>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="First Name" name="fname" required="required">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Last Name" name="lname" required="required">
+            </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Search</button>
+            </div>
 
 <table class="table table-striped" style=margin-top:50px>
   <thead>
