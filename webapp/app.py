@@ -99,8 +99,9 @@ def predictBox():
     cursor.callproc('sp_boxOffice', (directorf, directorl, actor1f, actor1l, actor2f, actor2l))
     data = cursor.fetchall()
     if data:
-        session['prediction'] = data
+        session['prediction'] = data[0][0]
         return json.dumps({'Prediction' : data})
+        # return render_template('predict.html', prediction = data[0][0])
     else:
         return json.dumps({'Prediction' : 'unsuccessful'})
 
@@ -180,7 +181,7 @@ def SearchActors():
 
 @app.route("/SearchMovies", methods=['GET'])
 def SearchMovies():
-    userQuery = request.form['query']
+    userQuery = request.form['movieSearch']
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.callproc('sp_searchMovies', userQuery)

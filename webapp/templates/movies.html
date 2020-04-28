@@ -1,5 +1,5 @@
-<INPUT TYPE = "Text" Name = "movieSearch">
-<button class="btn btn-primary searchMovie">Search</button>
+<INPUT TYPE = "Text" name = "movieSearch" id = 'movieSearch'>
+<button class="btn btn-primary movieSearch">Search</button>
 
 <table class="table table-striped" style=margin-top:50px>
   <thead>
@@ -46,15 +46,15 @@ $(".movieFav").click(function(e) {
        });
    });
 
-   $(".searchMovie").click(function(e) {
+   $(".movieSearch").click(function(e) {
         e.preventDefault();
         $.ajax({
-               type: "Get",
+               type: "GET",
                url: '/SearchMovies',
                data: {"query": document.getElementsByName('movieSearch').value},
                success: function(data)
                {
-                  alert(data);
+                  $("#MainBox").html(data);
                }
              });
      });
