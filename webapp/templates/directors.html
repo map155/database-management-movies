@@ -1,0 +1,39 @@
+
+<INPUT TYPE = "Text" Name = "dirSearch">
+<button class="btn btn-primary searchDir">Search</button>
+
+<table class="table table-striped" style=margin-top:50px>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for line in x %}
+        <tr>
+            <th scope="row">{{line[0]}}</th>
+            <td>{{line[1]}}</td>
+            <td>{{line[2]}}</td>
+         </tr>
+       {% endfor %}
+
+  </tbody>
+</table>
+
+<script>
+   $(".searchDir").click(function(e) {
+        e.preventDefault();
+        $.ajax({
+               type: "Get",
+               url: '/SearchDirectors',
+               data: {"query": $(this).getElementByName('dirSearch')},
+               success: function(data)
+               {
+                  alert(data);
+               }
+             });
+     });
+
+</script>

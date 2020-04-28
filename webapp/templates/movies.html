@@ -1,4 +1,7 @@
-<table class="table table-striped">
+<INPUT TYPE = "Text" Name = "movieSearch">
+<button class="btn btn-primary searchMovie">Search</button>
+
+<table class="table table-striped" style=margin-top:50px>
   <thead>
     <tr>
       <th scope="col"></th>
@@ -43,5 +46,17 @@ $(".movieFav").click(function(e) {
        });
    });
 
+   $(".searchMovie").click(function(e) {
+        e.preventDefault();
+        $.ajax({
+               type: "Get",
+               url: '/SearchMovies',
+               data: {"query": $(this).getElementByName('movieSearch')},
+               success: function(data)
+               {
+                  alert(data);
+               }
+             });
+     });
 
 </script>

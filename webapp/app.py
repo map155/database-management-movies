@@ -144,6 +144,15 @@ def getActors():
     if data:
         return render_template('actors.html', x=data)
 
+@app.route("/GetDirectors")
+def getDirectors():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM directors")
+    data = cursor.fetchall()
+    if data:
+        return render_template('directors.html', x=data)
+
 @app.route("/FavActors", methods=['POST'])
 def FavActors():
     actorID = request.form['actorID']
@@ -156,6 +165,39 @@ def FavActors():
         print(data)
         conn.commit()
         return json.dumps({'success': 'Favorited Actor'})
+    return json.dumps({'Error': 'Unknonwn'})
+
+@app.route("/SearchActors", methods=['GET'])
+def SearchActors():
+    userQuery = request.form['query']
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.callproc('sp_searchActors', userQuery)
+    data = cursor.fetchall()
+    if data:
+        return render_template('actors.html', x=data)
+    return json.dumps({'Error': 'Unknonwn'})
+
+@app.route("/SearchMovies", methods=['GET'])
+def SearchMovies():
+    userQuery = request.form['query']
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.callproc('sp_searchMovies', userQuery)
+    data = cursor.fetchall()
+    if data:
+        return render_template('movies.html', x=data)
+    return json.dumps({'Error': 'Unknonwn'})
+
+@app.route("/SearchDirectors", methods=['GET'])
+def SearchDirectors():
+    userQuery = request.form['query']
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.callproc('sp_searchDirectors', userQuery)
+    data = cursor.fetchall()
+    if data:
+        return render_template('directors.html', x=data)
     return json.dumps({'Error': 'Unknonwn'})
 
 

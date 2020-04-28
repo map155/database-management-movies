@@ -41,6 +41,7 @@
         <a id="ProfileTab" class="list-group-item list-group-item-action bg-light">Profile</a>
         <a id="MoviesTab" class="list-group-item list-group-item-action bg-light">Movies</a>
         <a id="ActorsTab" class="list-group-item list-group-item-action bg-light">Actors</a>
+        <a id="DirectorsTab" class="list-group-item list-group-item-action bg-light">Directors</a>
         <a id="PredictTab" class="list-group-item list-group-item-action bg-light">Predict</a>
       </div>
     </div>
@@ -107,6 +108,18 @@
                 }
               });
           });
+
+          $("#DirectorsTab").click(function(e) {
+            e.preventDefault();
+            $.ajax({
+                   type: "GET",
+                   url: '/GetDirectors',
+                   success: function(data)
+                   {
+                       $("#MainBox").html(data);
+                   }
+                 });
+             });
 
     $("#ProfileTab").click(function(e) {
       e.preventDefault();

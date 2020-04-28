@@ -1,4 +1,7 @@
-<table class="table table-striped">
+<INPUT TYPE = "Text" Name = "actorSearch">
+<button class="btn btn-primary searchActor">Search</button>
+
+<table class="table table-striped" style=margin-top:50px>
   <thead>
     <tr>
       <th scope="col"></th>
@@ -33,4 +36,17 @@ $(".actorFav").click(function(e) {
          }
        });
    });
+
+$(".searchActor").click(function(e) {
+     e.preventDefault();
+     $.ajax({
+            type: "Get",
+            url: '/SearchActors',
+            data: {"query": $(this).getElementByName('actorSearch')},
+            success: function(data)
+            {
+               alert(data);
+            }
+          });
+  });
 </script>
