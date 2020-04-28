@@ -3,21 +3,22 @@
 
   <!-- Custom styles for this template -->
   <link href="/css/simple-sidebar.css" rel="stylesheet">
-   
+
     <div class="login-form">
         <form action="/SearchDirectors" method="post" id="searchForm">
             <h2 class="text-center">Search</h2>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="First Name" name="fname" required="required">
+                <input type="text" class="form-control" placeholder="First Name" name="fname">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Last Name" name="lname" required="required">
+                <input type="text" class="form-control" placeholder="Last Name" name="lname">
             </div>
               <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block">Search</button>
             </div>
-
-<table class="table table-striped" style=margin-top:50px>
+        </form>
+    </div>
+<table id="Results" class="table table-striped" style=margin-top:50px>
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -38,17 +39,17 @@
 </table>
 
 <script>
-   $(".searchDir").click(function(e) {
-        e.preventDefault();
-        $.ajax({
-               type: "Get",
-               url: '/SearchDirectors',
-               data: {"query": document.getElementByName('dirSearch').value},
-               success: function(data)
-               {
-                  $("#MainBox").html(data);
-               }
-             });
-     });
+$("#searchForm").submit(function(e) {
+     e.preventDefault();
+     $.ajax({
+            type: "Post",
+            url: '/SearchDirectors',
+            data: $(this).serialize(),
+            success: function(data)
+            {
+               $("#Results").html(data);
+            }
+          });
+  });
 
 </script>

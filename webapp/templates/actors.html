@@ -7,16 +7,17 @@
         <form action="/SearchActors" method="post" id="searchForm">
             <h2 class="text-center">Search</h2>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="First Name" name="fname" required="required">
+                <input type="text" class="form-control" placeholder="First Name" name="fname">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Last Name Name" name="lname" required="required">
+                <input type="text" class="form-control" placeholder="Last Name Name" name="lname">
             </div>
               <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block">Search</button>
             </div>
-
-<table class="table table-striped" style=margin-top:50px>
+        </form>
+    </div>
+<table id="Results" class="table table-striped" style=margin-top:50px>
   <thead>
     <tr>
       <th scope="col"></th>
@@ -52,15 +53,15 @@ $(".actorFav").click(function(e) {
        });
    });
 
-$(".searchActor").click(function(e) {
+$("#searchForm").submit(function(e) {
      e.preventDefault();
      $.ajax({
-            type: "Get",
+            type: "Post",
             url: '/SearchActors',
-            data: {"query": document.getElementsByName('actorSearch').value},
+            data: $(this).serialize(),
             success: function(data)
             {
-               $("#MainBox").html(data);
+               $("#Results").html(data);
             }
           });
   });

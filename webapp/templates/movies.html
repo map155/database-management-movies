@@ -13,8 +13,9 @@
               <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block">Search</button>
             </div>
-
-<table class="table table-striped" style=margin-top:50px>
+        </form>
+    </div>
+<table id="Results" class="table table-striped" style=margin-top:50px>
   <thead>
     <tr>
       <th scope="col"></th>
@@ -59,15 +60,15 @@ $(".movieFav").click(function(e) {
        });
    });
 
-   $(".movieSearch").click(function(e) {
+   $("#searchForm").submit(function(e) {
         e.preventDefault();
         $.ajax({
-               type: "POST",
+               type: "Post",
                url: '/SearchMovies',
-               data: {"query": document.getElementsByName('movieSearch').value},
+               data: $(this).serialize(),
                success: function(data)
                {
-                  $("#MainBox").html(data);
+                  $("#Results").html(data);
                }
              });
      });

@@ -131,7 +131,7 @@ def createUser():
 def getMovies():
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM movies")
+    cursor.execute("SELECT * FROM movies limit 100")
     data = cursor.fetchall()
     if data:
         return render_template('movies.html', x=data)
@@ -140,7 +140,7 @@ def getMovies():
 def getActors():
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM actors")
+    cursor.execute("SELECT * FROM actors limit 100")
     data = cursor.fetchall()
     if data:
         return render_template('actors.html', x=data)
@@ -149,7 +149,7 @@ def getActors():
 def getDirectors():
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM directors")
+    cursor.execute("SELECT * FROM directors limit 100")
     data = cursor.fetchall()
     if data:
         return render_template('directors.html', x=data)
@@ -177,8 +177,8 @@ def SearchActors():
     cursor.callproc('sp_searchActors', (first,last))
     data = cursor.fetchall()
     if data:
-        return render_template('actors.html', x=data)
-    return json.dumps({'Error': 'Unknonwn'})
+        return render_template('actorsTable.html', x=data)
+    return render_template('actorsTable.html')
 
 @app.route("/SearchMovies", methods=['GET', 'POST'])
 def SearchMovies():
@@ -188,8 +188,8 @@ def SearchMovies():
     cursor.callproc('sp_searchMovies', (title,))
     data = cursor.fetchall()
     if data:
-        return render_template('movies.html', x=data)
-    return json.dumps({'Error': 'Unknonwn'})
+        return render_template('moviesTable.html', x=data)
+    return render_template('moviesTable.html')
 
 @app.route("/SearchDirectors", methods=['GET', 'POST'])
 def SearchDirectors():
@@ -200,8 +200,8 @@ def SearchDirectors():
     cursor.callproc('sp_searchDirectors', (first,last))
     data = cursor.fetchall()
     if data:
-        return render_template('directors.html', x=data)
-    return json.dumps({'Error': 'Unknonwn'})
+        return render_template('directorsTable.html', x=data)
+    return render_template('directorsTable.html')
 
 
 @app.route("/getProfile")
