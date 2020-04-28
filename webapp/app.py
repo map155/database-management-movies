@@ -171,10 +171,10 @@ def FavActors():
 @app.route("/SearchActors", methods=['GET','POST'])
 def SearchActors():
     first = request.form['fname']
-    last = request.form['lname']
+    # last = request.form['lname']
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.callproc('sp_searchActors', (first,last))
+    cursor.callproc('sp_searchActors', (first,))
     data = cursor.fetchall()
     if data:
         return render_template('actorsTable.html', x=data)
@@ -194,10 +194,10 @@ def SearchMovies():
 @app.route("/SearchDirectors", methods=['GET', 'POST'])
 def SearchDirectors():
     first = request.form['fname']
-    last = request.form['lname']
+    # last = request.form['lname']
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.callproc('sp_searchDirectors', (first,last))
+    cursor.callproc('sp_searchDirectors', (first,))
     data = cursor.fetchall()
     if data:
         return render_template('directorsTable.html', x=data)
